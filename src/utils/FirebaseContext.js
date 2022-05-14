@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { useContext, createContext, useState, useEffect } from "react";
 import { app, storage, db } from "./firebase";
@@ -79,8 +80,12 @@ function AuthProvider({ children }) {
     return signInWithEmailAndPassword(auth, email, password);
   }
 
-  async function logout(email, password) {
+  async function logout() {
     return signOut(auth);
+  }
+
+  async function resetPassword(email) {
+    return sendPasswordResetEmail(auth, email);
   }
 
   const value = {
@@ -91,6 +96,7 @@ function AuthProvider({ children }) {
     imageUpload,
     images,
     logout,
+    resetPassword,
   };
 
   useEffect(() => {
